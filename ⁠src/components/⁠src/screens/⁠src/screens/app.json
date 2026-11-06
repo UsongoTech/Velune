@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "Velune",
+    "slug": "velune",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev"
+    },
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0d0814"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourdomain.velune",
+      "entitlements": {
+        "com.apple.developer.in-app-payments": [
+          "merchant.com.yourdomain.velune"
+        ]
+      },
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0d0814"
+      },
+      "package": "com.yourdomain.velune"
+    },
+    "plugins": [
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "merchant.com.yourdomain.velune",
+          "enableGooglePay": true
+        }
+      ]
+    ]
+  }
+}
