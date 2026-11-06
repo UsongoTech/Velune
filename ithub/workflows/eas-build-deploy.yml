@@ -1,0 +1,39 @@
+name: Deploy Velune App to TestFlight & Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build and Auto-Submit to TestFlight
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🏗 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: 🚀 Setup Expo & EAS CLI
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 📲 Publish OTA Update (Main Channel)
+        run: |
+          eas update --channel main --auto --non-interactive \
+            --message "Automated deployment from commit ${{ github.sha }}"
+
+      - name: 🛠 Trigger iOS Build & TestFlight Submit
+        run: |
+          eas build --platform ios --profile production --auto-submit --non-interactive
